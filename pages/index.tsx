@@ -1,5 +1,6 @@
 import { LoginUser, RegisterUser, ResetPassword } from "@/functions";
 import React from "react";
+import { Toaster } from "react-hot-toast";
 
 const Index = () => {
   const email = "ngene.samuel@lmu.edu.ng";
@@ -7,6 +8,7 @@ const Index = () => {
   const name = "Samuel Admin";
   return (
     <>
+      <Toaster />
       <div
         className="underline"
         onClick={() => RegisterUser({ email, password, name })}

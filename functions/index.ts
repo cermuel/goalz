@@ -6,6 +6,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "@/firebaseconfig";
+import { toast } from "react-hot-toast";
 
 //REGISTER USER WITH EMAIL AND PASSWORD
 export const RegisterUser = (RegisterDetails: RegisterUserType) => {
@@ -18,14 +19,16 @@ export const RegisterUser = (RegisterDetails: RegisterUserType) => {
       const user = userCredential.user;
       updateProfile(user, { displayName: RegisterDetails.name })
         .then((res) => {
-          console.log("User created successfully!");
+          toast.success("Account Successfully Created");
           console.log(res);
         })
         .catch((error) => {
-          console.error("Error Creating User:", error);
+          toast.error("Error Creating Account");
+          console.log(error);
         });
     })
     .catch((err) => {
+      toast.error("Error Creating Account");
       console.log(err);
     });
 };
@@ -33,15 +36,20 @@ export const RegisterUser = (RegisterDetails: RegisterUserType) => {
 //LOGIN USER WITH EMAIL AND PASSWORD
 export const LoginUser = (LoginDetails: LoginUserType) => {
   signInWithEmailAndPassword(auth, LoginDetails.email, LoginDetails.password)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+    .then((res) => {
+      console.log(res);
+      toast.success("Login Successful");
+    })
+    .catch((err) => {
+      toast.error("An error occured");
+      console.log(err);
+    });
 };
 
 export const ResetPassword = (ResetDetails: ResetPasswordType) => {
   sendPasswordResetEmail(auth, ResetDetails.email)
-    .then((res) => {
-      console.log(res);
-      console.log("Mail sent");
+    .then(() => {
+      toast.success("Check Email For Reset Link");
     })
-    .then((err) => console.log(err));
+    .catch((err) => toast.error("An error occurred"));
 };
