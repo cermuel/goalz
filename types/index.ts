@@ -12,3 +12,18 @@ export type LoginUserType = {
 export type ResetPasswordType = {
   email: string;
 };
+
+export type InputType = {
+  placeholder: string;
+  onChange: void | string | any;
+  type: string;
+  label: string;
+  error?: boolean;
+};
+
+export type ButtonType = {
+  onClick: any;
+  text: string;
+  loading: boolean;
+  disabled?: boolean;
+};
