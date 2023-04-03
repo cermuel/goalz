@@ -99,7 +99,9 @@ const Home = () => {
                 };
                 matches.competitions[0]?.details.map((details: any) => {
                   redirect.matchData.matchEvents.push({
-                    athlete: details?.athletesInvolved[0].displayName,
+                    athlete:
+                      details?.athletesInvolved?.length > 0 &&
+                      details?.athletesInvolved[0].displayName,
                     time: details?.clock.displayValue,
                     eventType: details?.type.text,
                     homeTeam: details?.team.id == match[0].id,

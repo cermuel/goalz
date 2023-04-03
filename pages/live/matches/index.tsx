@@ -1,3 +1,4 @@
+import GoBack from "@/components/GoBack";
 import Error from "@/components/live/Error";
 import Heading from "@/components/live/Heading";
 import MatchCard from "@/components/live/Home/MatchCard";
@@ -129,8 +130,9 @@ const Matches = () => {
         <main
           className={`w-full min-h-screen sm:p-12 px-6 py-12  ${
             mode == "dark" && "bg-[#111]"
-          } flex flex-col gap-8`}
+          } flex flex-col gap-8 relative`}
         >
+          <GoBack />
           {leagues.map((league: any, key: number) => {
             return (
               <section className="space-y-2" key={key}>
@@ -207,7 +209,9 @@ const Matches = () => {
                       };
                       matches.competitions[0]?.details.map((details: any) => {
                         redirect.matchData.matchEvents.push({
-                          athlete: details?.athletesInvolved[0].displayName,
+                          athlete:
+                            details?.athletesInvolved?.length > 0 &&
+                            details?.athletesInvolved[0].displayName,
                           time: details?.clock.displayValue,
                           eventType: details?.type.text,
                           homeTeam: details?.team.id == match[0].id,
