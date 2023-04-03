@@ -9,9 +9,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../_app";
 import Loading from "@/components/live/Loading";
 import Error from "@/components/live/Error";
+import { useRouter } from "next/router";
 
 const Home = () => {
   const { mode } = useContext(ThemeContext);
+  const router = useRouter();
   const [loadingMatches, setloadingMatches] = useState<boolean>(false);
   const [errorMatches, seterrorMatches] = useState<any>();
   const [dataMatches, setdataMatches] = useState<any>();
@@ -42,7 +44,7 @@ const Home = () => {
           <section className="my-8">
             <div className="flex justify-between items-center py-2">
               <Heading heading="Recent Scores" />
-              <ViewAll action={() => alert("clicked")} />
+              <ViewAll action={() => router.push("/live/matches")} />
             </div>
             <div className="flex flex-col gap-2">
               {dataMatches?.events.slice(0, 10).map((matches: any) => {
@@ -136,7 +138,7 @@ const Home = () => {
       </LiveLayout>
     );
   } else if (errorMatches) {
-    return <Error />;
+    return <Error message={errorMatches.message} />;
   } else {
     return <Loading />;
   }

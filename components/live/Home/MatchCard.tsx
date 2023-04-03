@@ -7,11 +7,17 @@ import React, { useContext } from "react";
 const MatchCard = (Match: MatchCardType) => {
   const { mode } = useContext(ThemeContext);
   // console.log(JSON.stringify(Match.redirect.matchData));
+  const some = JSON.stringify(Match.redirect.matchData.matchEvents);
+
   return (
     <Link
       href={{
         pathname: Match.redirect.path,
-        query: Match.redirect.matchData,
+        query: {
+          match: JSON.stringify(Match.redirect.matchData),
+          // event: Match.redirect.matchData.matchEvents,
+          event: some,
+        },
       }}
     >
       <section

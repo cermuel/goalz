@@ -5,7 +5,7 @@ import { MdLightMode, MdDarkMode } from "react-icons/md";
 const Header = () => {
   const { mode, switchMode } = useContext(ThemeContext);
   return (
-    <div className="fixed top-2 right-2">
+    <div className="fixed top-2 right-2 z-50">
       {mode == "light" ? (
         <MdDarkMode
           className="text-pry-color text-3xl cursor-pointer"

@@ -5,15 +5,21 @@ import { matchData } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
+import Loading from "@/components/live/Loading";
 
-const Match = () => {
+const Match = ({ query }) => {
   const router = useRouter();
   const data = router.query;
   console.log(data);
+  const match = data.match && JSON.parse(data.match);
+  const events = data.event && JSON.parse(data.event);
+  events?.shift();
+  console.log(events);
+
   const { mode } = useContext(ThemeContext);
-  const homeForm = data?.homeTeamForm?.split("");
-  const awayForm = data?.awayTeamForm?.split("");
-  if (data) {
+  const homeForm = match?.homeTeamForm?.split("");
+  const awayForm = match?.awayTeamForm?.split("");
+  if (match && events) {
     return (
       <LiveLayout>
         <main
@@ -28,12 +34,12 @@ const Match = () => {
                   mode == "dark" ? "text-[#252525]" : "text-white"
                 } text-xl font-semibold`}
               >
-                {data.status}
+                {match?.status}
               </div>
               <section>
                 <div>
                   <Image
-                    src={data?.homeTeamImageUrl}
+                    src={match?.homeTeamImageUrl}
                     alt="Team"
                     width={60}
                     height={60}
@@ -42,21 +48,21 @@ const Match = () => {
                   <p
                     className={`text-sm font-semibold text-white text-center `}
                   >
-                    {data.homeTeamName}
+                    {match.homeTeamName}
                   </p>
                 </div>
               </section>
               <section>
                 <div>
                   <Image
-                    src={data?.awayTeamImageUrl}
+                    src={match?.awayTeamImageUrl}
                     alt="Team"
                     width={60}
                     height={60}
                     priority={true}
                   />{" "}
                   <p className={`text-sm font-semibold text-white text-center`}>
-                    {data.awayTeamName}
+                    {match.awayTeamName}
                   </p>
                 </div>
               </section>
@@ -65,7 +71,7 @@ const Match = () => {
                   mode == "dark" ? "text-[#252525]" : "text-white"
                 } text-base font-semibold`}
               >
-                {data.venue}
+                {match.venue}
               </div>
             </div>
           </div>
@@ -108,7 +114,7 @@ const Match = () => {
             </div>
           </section>
           <Heading heading="Odds" />
-          <section className="flex md:w-[60%] w-full gap-2 pb-6 justify-around">
+          <section className="flex md:w-[60%] w-full gap-2 pb-8 justify-around">
             <div
               className={`rounded-md font-bold w-40 flex justify-between p-2 ${
                 mode == "dark"
@@ -117,7 +123,7 @@ const Match = () => {
               } `}
             >
               <span>1</span>
-              {data?.homeTeamOdds}
+              {match?.homeTeamOdds}
             </div>{" "}
             <div
               className={`rounded-md font-bold w-40 flex justify-between p-2 ${
@@ -127,7 +133,7 @@ const Match = () => {
               } `}
             >
               <span>X</span>
-              {data?.drawOdds}
+              {match?.drawOdds}
             </div>{" "}
             <div
               className={`rounded-md font-bold w-40 flex justify-between p-2 ${
@@ -137,12 +143,55 @@ const Match = () => {
               } `}
             >
               <span>2</span>
-              {data?.awayTeamOdds}
+              {match?.awayTeamOdds}
             </div>{" "}
+          </section>{" "}
+          <Heading heading="Match Events" />
+          <section className="w-full border-[1px] border-gray-500 ">
+            {events?.length > 0 ? (
+              events.map((event) => {
+                return (
+                  <div
+                    className={`border-b-[1px] w-full border-gray-500 p-2 flex justify-center relative items-center ${
+                      event.homeTeam && "border-r-[6px] border-r-pry-color"
+                    } `}
+                  >
+                    <span
+                      className={`text-xs absolute left-2 ${
+                        mode == "dark" ? "text-white" : "text-[#111"
+                      }`}
+                    >
+                      {event.time}
+                    </span>
+                    <span
+                      className={` ${
+                        mode == "dark" ? "text-white" : "text-[#111"
+                      }`}
+                    >
+                      {`${event.athlete}  - ${
+                        event.eventType && event.eventType.includes("Goal")
+                          ? "GOAL"
+                          : event.eventType
+                      }`}
+                    </span>
+                  </div>
+                );
+              })
+            ) : (
+              <div
+                className={`font-semibold text-center text-lg my-4 ${
+                  mode == "light" ? "text-[#111]" : "text-white"
+                }`}
+              >
+                Match events not available yet!!!
+              </div>
+            )}
           </section>
         </main>
       </LiveLayout>
     );
+  } else {
+    return <Loading />;
   }
 };
 

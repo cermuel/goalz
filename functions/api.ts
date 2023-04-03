@@ -104,5 +104,31 @@ export const GetAllMatches = (setdata: any, seterror: any, setloading: any) => {
     })
     .catch((err) => {
       setloading(false);
+      seterror(err);
+      console.log(err);
+    });
+};
+
+//GET LEAGUE MATCHES
+export const GetLeagueMatches = (
+  league: string,
+  setdata: any,
+  seterror: any,
+  setloading: any
+) => {
+  setloading(true);
+  axios
+    .get(
+      `https://site.api.espn.com/apis/site/v2/sports/soccer/${league}.1/scoreboard
+    `
+    )
+    .then((response) => {
+      setdata(response.data);
+      setloading(false);
+    })
+    .catch((err) => {
+      setloading(false);
+      seterror(err);
+      console.log(err);
     });
 };
