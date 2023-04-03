@@ -33,7 +33,7 @@ const Match = () => {
               <section>
                 <div>
                   <Image
-                    src={data?.homeTeamImageUrl as string}
+                    src={data?.homeTeamImageUrl}
                     alt="Team"
                     width={60}
                     height={60}
@@ -49,7 +49,7 @@ const Match = () => {
               <section>
                 <div>
                   <Image
-                    src={data?.awayTeamImageUrl as string}
+                    src={data?.awayTeamImageUrl}
                     alt="Team"
                     width={60}
                     height={60}
@@ -73,7 +73,7 @@ const Match = () => {
           <section className="flex md:w-[60%] w-full pb-6 justify-around">
             <div>
               <p className={`font-bold text-xl`}>
-                {homeForm?.map((form: string) => (
+                {homeForm?.map((form) => (
                   <span
                     className={`ml-[1px] ${
                       form == "W"
@@ -91,7 +91,7 @@ const Match = () => {
             <div>
               {" "}
               <p className={`font-bold text-xl`}>
-                {awayForm?.map((form: string) => (
+                {awayForm?.map((form) => (
                   <span
                     className={`ml-[1px] ${
                       form == "W"
