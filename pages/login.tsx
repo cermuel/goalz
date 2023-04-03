@@ -12,7 +12,7 @@ import { ThemeContext } from "./_app";
 const Login = () => {
   const router = useRouter();
   const { mode } = useContext(ThemeContext);
-  const navigate = () => router.push("/dashboard");
+  const navigate = () => router.push("/live");
   const [loginDetails, setloginDetails] = useState<LoginUserType>({
     email: "",
     password: "",
@@ -22,7 +22,7 @@ const Login = () => {
   return (
     <main
       className={` ${
-        mode == "dark" && "bg-black"
+        mode == "dark" && "bg-[#111]"
       } h-screen w-screen justify-center items-center flex`}
     >
       {showfpass && <ForgotPassword setshowfpass={setshowfpass} />}

@@ -27,3 +27,47 @@ export type ButtonType = {
   loading: boolean;
   disabled?: boolean;
 };
+
+export type MatchCardType = {
+  homeTeamName: string;
+  awayTeamName: string;
+  homeTeamGoals: number | string;
+  awayTeamGoals: number | string;
+  homeTeamImageUrl: string;
+  awayTeamImageUrl: string;
+  status: string;
+  redirect: redirect;
+  homeWinner: boolean;
+  awayWinner: boolean;
+};
+
+export type redirect = {
+  path: string;
+  matchData: matchData | any;
+};
+
+export type matchData = {
+  homeTeamName: string | any;
+  awayTeamName: string | any;
+  homeTeamGoals: number | string | any;
+  awayTeamGoals: number | string;
+  homeTeamImageUrl: string | any;
+  awayTeamImageUrl: string | any;
+  homeTeamForm: string | any;
+  awayTeamForm: string | any;
+  headline: string | any;
+  venue: string | any;
+  status: string | any;
+  matchEvents?: matchEvents[];
+  homeTeamOdds?: number | string;
+  awayTeamOdds?: number | string;
+  drawOdds?: number | string;
+  competition: string;
+};
+
+export type matchEvents = {
+  athlete: string | any;
+  time: number | string | any;
+  eventType: string | any;
+  homeTeam: boolean | any;
+};

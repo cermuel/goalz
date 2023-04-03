@@ -31,15 +31,15 @@ const Input = (Input: InputType) => {
         {Input.type == "password" &&
           (show ? (
             <RxEyeOpen
-              className={` ${
-                Input.error && "text-error-color"
+              className={` ${Input.error && "text-error-color"}  ${
+                mode == "dark" && "text-gray-500"
               } absolute right-4 translate-y-[-50%] top-[50%] cursor-pointer animate-pulse`}
               onClick={() => setshow(!show)}
             />
           ) : (
             <RxEyeClosed
-              className={` ${
-                Input.error && "text-error-color"
+              className={` ${Input.error && "text-error-color"} ${
+                mode == "dark" && "text-gray-500"
               } absolute right-4 translate-y-[-50%] top-[50%] cursor-pointer animate-pulse`}
               onClick={() => setshow(!show)}
             />

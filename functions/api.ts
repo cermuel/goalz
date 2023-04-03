@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth } from "@/firebaseconfig";
 import { toast } from "react-hot-toast";
+import axios from "axios";
 
 //REGISTER USER WITH EMAIL AND PASSWORD
 export const RegisterUser = (
@@ -68,12 +69,13 @@ export const LoginUser = (
         setTimeout(() => {
           extraFunc();
         }, 3000);
+        res.user.displayName &&
+          localStorage.setItem("name", res.user.displayName);
         setloading(false);
       })
       .catch((err) => {
         toast.error("An error occured");
         console.log(err);
-
         setloading(false);
       });
   } else {
@@ -89,4 +91,18 @@ export const ResetPassword = (ResetDetails: ResetPasswordType) => {
       toast.success("Check Email For Reset Link");
     })
     .catch((err) => toast.error("An error occurred"));
+};
+
+//GET ALL MATCHES
+export const GetAllMatches = (setdata: any, seterror: any, setloading: any) => {
+  setloading(true);
+  axios
+    .get(`http://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard`)
+    .then((response) => {
+      setdata(response.data);
+      setloading(false);
+    })
+    .catch((err) => {
+      setloading(false);
+    });
 };

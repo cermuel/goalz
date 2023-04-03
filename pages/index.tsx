@@ -26,7 +26,7 @@ const Index = () => {
   return (
     <main
       className={` ${
-        mode == "dark" && "bg-black"
+        mode == "dark" && "bg-[#111]"
       } h-screen w-screen justify-center items-center flex`}
     >
       <div className="px-8 sm:h-[600px] w-full sm:w-[450px] flex items-center flex-col justify-center flex-wrap">
