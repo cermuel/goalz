@@ -97,7 +97,7 @@ export const ResetPassword = (ResetDetails: ResetPasswordType) => {
 export const GetAllMatches = (setdata: any, seterror: any, setloading: any) => {
   setloading(true);
   axios
-    .get(`http://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard`)
+    .get(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard`)
     .then((response) => {
       setdata(response.data);
       setloading(false);
