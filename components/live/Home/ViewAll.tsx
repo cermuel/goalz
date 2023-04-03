@@ -1,5 +1,5 @@
 import React from "react";
-import LiveLayout from "../live/LiveLayout";
+import LiveLayout from "../LiveLayout";
 
 const ViewAll = ({ action }: any) => {
   return (
