@@ -10,7 +10,7 @@ const Navbar = () => {
     <div
       className={`${
         mode == "dark" && "bg-[#111]"
-      } h-screen w-72 border-r-[1px] border-gray-500 fixed top-0 left-0 max-sm:hidden`}
+      } h-screen w-72 border-r-[1px] border-gray-500 z-50 fixed top-0 left-0 max-sm:hidden`}
     >
       {" "}
       <Toaster />

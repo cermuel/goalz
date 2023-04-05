@@ -78,3 +78,17 @@ export type NewsCardType = {
   headline: string;
   action: void | any;
 };
+
+export type NewsRedirectType = {
+  path: string;
+  newsData: newsDataType;
+};
+
+export type newsDataType = {
+  headline: string;
+  image: string;
+  description: string;
+  datePublished: string;
+  link: string | string[];
+  category: string;
+};

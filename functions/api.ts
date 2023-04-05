@@ -147,3 +147,26 @@ export const GetAllNews = (setdata: any, seterror: any, setloading: any) => {
       console.log(err);
     });
 };
+
+export const GetLeagueNews = (
+  league: string,
+  setdata: any,
+  seterror: any,
+  setloading: any
+) => {
+  setloading(true);
+  axios
+    .get(
+      `https://site.api.espn.com/apis/site/v2/sports/soccer/${league}.1/news
+    `
+    )
+    .then((response) => {
+      setdata(response.data);
+      setloading(false);
+    })
+    .catch((err) => {
+      setloading(false);
+      seterror(err);
+      console.log(err);
+    });
+};
