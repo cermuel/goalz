@@ -125,11 +125,15 @@ const Home = () => {
                     homeTeamImageUrl={match[0].team.logo}
                     awayWinner={match[1].winner}
                     homeWinner={match[0].winner}
-                    status={`${d.getUTCHours() + 1}:${
-                      d.getUTCMinutes() == 0
-                        ? d.getUTCMinutes() + "0"
-                        : d.getUTCMinutes()
-                    }`}
+                    status={
+                      matches?.status.type.shortDetail == "FT"
+                        ? "FT"
+                        : `${d.getUTCHours() + 1}:${
+                            d.getUTCMinutes() == 0
+                              ? d.getUTCMinutes() + "0"
+                              : d.getUTCMinutes()
+                          }`
+                    }
                     redirect={redirect}
                   />
                 );
