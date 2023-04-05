@@ -12,11 +12,9 @@ import { TbRectangleVerticalFilled } from "react-icons/tb";
 const Match = ({ query }) => {
   const router = useRouter();
   const data = router.query;
-  console.log(data);
   const match = data.match && JSON.parse(data.match);
   const events = data.event && JSON.parse(data.event);
   events?.shift();
-  console.log(match);
 
   const { mode } = useContext(ThemeContext);
   const homeForm = match?.homeTeamForm?.split("");

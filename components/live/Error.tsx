@@ -10,7 +10,9 @@ const Error = ({ message }: any) => {
         mode == "dark" && "bg-[#111]"
       } w-screen h-screen flex justify-center items-center`}
     >
-      <h1 className="text-pry-color font-semibold text-2xl">{message}</h1>
+      <h1 className="text-pry-color font-semibold text-2xl capitalize">
+        {message}
+      </h1>
     </div>
   );
 };

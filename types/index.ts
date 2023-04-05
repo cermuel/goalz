@@ -71,3 +71,10 @@ export type matchEvents = {
   eventType: string | any;
   homeTeam: boolean | any;
 };
+
+export type NewsCardType = {
+  image: string;
+  date: string | number;
+  headline: string;
+  action: void | any;
+};

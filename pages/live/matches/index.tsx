@@ -257,7 +257,13 @@ const Matches = () => {
     portugalError ||
     rusiaError
   ) {
-    return <Error />;
+    return (
+      <Error
+        message={
+          englishError?.message ? englishError.message : "An Error Occured"
+        }
+      />
+    );
   } else {
     return <Loading />;
   }
