@@ -8,7 +8,7 @@ import React, { useContext } from "react";
 const NewsCard = (News: NewsCardType) => {
   const { mode } = useContext(ThemeContext);
   const router = useRouter();
-  console.log(News.action);
+  // console.log(News.action);
   return (
     <main
       className={`${

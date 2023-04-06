@@ -69,8 +69,8 @@ export const LoginUser = (
         setTimeout(() => {
           extraFunc();
         }, 3000);
-        res.user.displayName &&
-          localStorage.setItem("name", res.user.displayName);
+        res?.user?.displayName &&
+          localStorage.setItem("name", res?.user?.displayName);
         setloading(false);
       })
       .catch((err) => {
@@ -99,7 +99,7 @@ export const GetAllMatches = (setdata: any, seterror: any, setloading: any) => {
   axios
     .get(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard`)
     .then((response) => {
-      setdata(response.data);
+      setdata(response?.data);
       setloading(false);
     })
     .catch((err) => {
@@ -123,7 +123,7 @@ export const GetLeagueMatches = (
     `
     )
     .then((response) => {
-      setdata(response.data);
+      setdata(response?.data);
       setloading(false);
     })
     .catch((err) => {
@@ -138,7 +138,7 @@ export const GetAllNews = (setdata: any, seterror: any, setloading: any) => {
   axios
     .get(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/news`)
     .then((response) => {
-      setdata(response.data);
+      setdata(response?.data);
       setloading(false);
     })
     .catch((err) => {
@@ -161,7 +161,54 @@ export const GetLeagueNews = (
     `
     )
     .then((response) => {
-      setdata(response.data);
+      setdata(response?.data);
+      setloading(false);
+    })
+    .catch((err) => {
+      setloading(false);
+      seterror(err);
+      console.log(err);
+    });
+};
+
+export const GetLeagueTeams = (
+  league: string,
+  setdata: any,
+  seterror: any,
+  setloading: any
+) => {
+  setloading(true);
+  axios
+    .get(
+      `https://site.api.espn.com/apis/site/v2/sports/soccer/${league}.1/teams
+    `
+    )
+    .then((response) => {
+      setdata(response?.data);
+      setloading(false);
+    })
+    .catch((err) => {
+      setloading(false);
+      seterror(err);
+      console.log(err);
+    });
+};
+
+export const GetSingleTeam = (
+  id: string | number,
+  slug: string,
+  setdata: any,
+  seterror: any,
+  setloading: any
+) => {
+  setloading(true);
+  axios
+    .get(
+      `http://site.api.espn.com/apis/site/v2/sports/soccer/${slug}.1/teams/${id}
+    `
+    )
+    .then((response) => {
+      setdata(response?.data);
       setloading(false);
     })
     .catch((err) => {

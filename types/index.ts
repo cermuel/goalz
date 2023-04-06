@@ -92,3 +92,19 @@ export type newsDataType = {
   link: string | string[];
   category: string;
 };
+
+export type TeamCardType = {
+  name: string;
+  image: string;
+  id: string | number;
+  slug: string;
+};
+
+export type RecordCardType = {
+  name: string;
+  value: string | number;
+};
+export type InfoCardType = {
+  name: string;
+  value: string;
+};

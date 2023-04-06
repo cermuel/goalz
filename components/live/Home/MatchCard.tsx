@@ -6,7 +6,6 @@ import React, { useContext } from "react";
 
 const MatchCard = (Match: MatchCardType) => {
   const { mode } = useContext(ThemeContext);
-  // console.log(JSON.stringify(Match.redirect.matchData));
   const some = JSON.stringify(Match.redirect.matchData.matchEvents);
 
   return (
@@ -15,7 +14,6 @@ const MatchCard = (Match: MatchCardType) => {
         pathname: Match.redirect.path,
         query: {
           match: JSON.stringify(Match.redirect.matchData),
-          // event: Match.redirect.matchData.matchEvents,
           event: some,
         },
       }}
@@ -44,8 +42,9 @@ const MatchCard = (Match: MatchCardType) => {
               width={20}
               height={10}
               alt={"Team Image"}
-              className="object-contain w-auto h-auto bg-contain"
-              src={Match.homeTeamImageUrl}
+              // className="object-contain w-auto h-auto bg-contain"
+              src={`${Match.homeTeamImageUrl}`}
+              priority={true}
             />{" "}
             {Match.homeTeamName}
           </div>
@@ -71,8 +70,8 @@ const MatchCard = (Match: MatchCardType) => {
               width={20}
               height={10}
               alt={"Team Image"}
-              className="object-contain w-auto h-auto bg-contain"
-              src={Match.awayTeamImageUrl}
+              src={`${Match.awayTeamImageUrl}`}
+              priority={true}
             />{" "}
             {Match.awayTeamName}
           </div>

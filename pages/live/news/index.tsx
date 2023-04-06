@@ -46,6 +46,12 @@ const News = () => {
   const [rusiaError, setrusiaError] = useState<any>();
   const [russiaLoading, setrussiaLoading] = useState<boolean>(false);
 
+  //NETHERLANDS
+
+  const [netherlandNews, setnetherlandNews] = useState<any>();
+  const [netherlandsError, setnetherlandsError] = useState<any>();
+  const [netherlandsLoading, setnetherlandsLoading] = useState<boolean>(false);
+
   const leagues = [
     {
       league: "eng",
@@ -81,6 +87,13 @@ const News = () => {
       league_data: setligueNews,
       league_error: setligueError,
       league_loading: setligueLoading,
+    },
+    {
+      league: "ned",
+      league_value: netherlandNews,
+      league_data: setnetherlandNews,
+      league_error: setnetherlandsError,
+      league_loading: setnetherlandsLoading,
     },
     {
       league: "por",
@@ -124,7 +137,8 @@ const News = () => {
     serieNews &&
     portugalNews &&
     ligueNews &&
-    russiaNews
+    russiaNews &&
+    netherlandsError
   ) {
     return (
       <LiveLayout>
@@ -189,7 +203,8 @@ const News = () => {
     serieError ||
     ligueError ||
     portugalError ||
-    rusiaError
+    rusiaError ||
+    netherlandsError
   ) {
     return (
       <Error

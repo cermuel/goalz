@@ -1,95 +1,82 @@
+import ForgotPassword from "@/components/Auth/ForgotPassword";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
-import { ValidateEmail, ValidatePasswordStrength } from "@/functions";
-import { LoginUser, RegisterUser, ResetPassword } from "@/functions/api";
-import { InputType, RegisterUserType } from "@/types";
-import Image from "next/image";
+import { LoginUser } from "@/functions/api";
+import { LoginUserType } from "@/types";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useContext, useState } from "react";
+import React, { useContext, useLayoutEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { ThemeContext } from "./_app";
 
-const Index = () => {
+const Login = () => {
   const router = useRouter();
   const { mode } = useContext(ThemeContext);
-  const navigate = () => router.push("/login");
-  const [strong, setstrong] = useState<boolean>(true);
-  const [loading, setloading] = useState(false);
-  const [registerDetails, setregisterDetails] = useState<RegisterUserType>({
-    name: "",
+  const navigate = () => router.push("/live");
+  const [loginDetails, setloginDetails] = useState<LoginUserType>({
     email: "",
     password: "",
   });
-  const [c_password, setc_password] = useState<string>("");
+  const [loading, setloading] = useState(false);
+  const [showfpass, setshowfpass] = useState(false);
 
+  useLayoutEffect(() => {
+    if (localStorage.getItem("name")) {
+      router.push("/live");
+    }
+  }, []);
   return (
     <main
       className={` ${
         mode == "dark" && "bg-[#111]"
       } h-screen w-screen justify-center items-center flex`}
     >
-      <div className="px-8 sm:h-[600px] w-full sm:w-[450px] flex items-center flex-col justify-center flex-wrap">
+      {showfpass && <ForgotPassword setshowfpass={setshowfpass} />}
+      <div className="px-8 sm:h-[600px] w-full sm:w-[400px] flex items-center flex-col justify-center flex-wrap">
         <Toaster />
         <h1 className="text-left flex flex-col w-full text-pry-color px-2 text-3xl mb-6 font-bold">
-          Create an Account
-          <span className="text-xs font-normal text-gray-400">
-            Create an account and never miss a single sport update
-          </span>
+          Welcome Back 👋 ⚽️
         </h1>
-        <Input
-          type={"text"}
-          placeholder={"Full Name"}
-          label="Full Name"
-          error={false}
-          onChange={(e: any) =>
-            setregisterDetails({ ...registerDetails, name: e.target.value })
-          }
-        />
+
         <Input
           type={"email"}
           label="Email"
           placeholder={"Email Address"}
-          error={
-            registerDetails.email == ""
-              ? false
-              : !ValidateEmail(registerDetails.email)
-          }
           onChange={(e: any) =>
-            setregisterDetails({ ...registerDetails, email: e.target.value })
+            setloginDetails({ ...loginDetails, email: e.target.value })
           }
         />
         <Input
           type={"password"}
           label="Password"
           placeholder={"Password"}
-          error={!strong}
           onChange={(e: any) => {
-            setregisterDetails({
-              ...registerDetails,
+            setloginDetails({
+              ...loginDetails,
               password: e.target.value,
             });
-            setstrong(ValidatePasswordStrength(e.target.value).strong);
           }}
         />
-        <Input
-          type={"password"}
-          label="Confirm Password"
-          placeholder={"Confirm Password"}
-          error={c_password !== registerDetails.password}
-          onChange={(e: any) => setc_password(e.target.value)}
-        />
+
         <Button
-          onClick={() => RegisterUser(registerDetails, navigate, setloading)}
-          text="Create Account"
+          onClick={() => LoginUser(loginDetails, navigate, setloading)}
+          text="Login"
           loading={loading}
         />
-        <Link className="text-sm mt-1 text-pry-color ml-auto" href={"/login"}>
-          Already have an account?
-        </Link>
+        <div className="w-full flex justify-between mt-1">
+          <span
+            className="text-sm text-pry-color cursor-pointer "
+            onClick={() => setshowfpass(!showfpass)}
+          >
+            Forgot Password?
+          </span>
+          <Link className="text-sm text-pry-color" href={"/register"}>
+            Don't have an account?
+          </Link>
+        </div>
       </div>
     </main>
   );
 };
 
-export default Index;
+export default Login;

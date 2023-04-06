@@ -2,7 +2,7 @@ import MatchCard from "@/components/live/Home/MatchCard";
 import ViewAll from "@/components/live/Home/ViewAll";
 import Heading from "@/components/live/Heading";
 import LiveLayout from "@/components/live/LiveLayout";
-import { GetAllMatches, GetAllNews } from "@/functions/api";
+import { GetAllMatches, GetAllNews, GetLeagueTeams } from "@/functions/api";
 import { matchEvents, NewsRedirectType, redirect } from "@/types";
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
@@ -11,6 +11,7 @@ import Loading from "@/components/live/Loading";
 import Error from "@/components/live/Error";
 import { useRouter } from "next/router";
 import NewsCard from "@/components/live/News/NewsCard";
+import TeamCard from "@/components/Teams/TeamCard";
 
 const Home = () => {
   const { mode } = useContext(ThemeContext);
@@ -23,17 +24,24 @@ const Home = () => {
   const [newsError, setnewsError] = useState<any>();
   const [newsLoading, setnewsLoading] = useState<boolean>(false);
 
+  const [teams, setteams] = useState<any>();
+  const [teamsError, setteamsError] = useState<any>();
+  const [teamsLoading, setteamsLoading] = useState<boolean>(false);
+  const [teamsArr, setteamsArr] = useState<any>();
+
   useEffect(() => {
     if (dataMatches == undefined || newsData == undefined) {
       GetAllMatches(setdataMatches, seterrorMatches, setloadingMatches);
       GetAllNews(setnewsData, setnewsError, setnewsLoading);
-      // console.log(newsData);
+      GetLeagueTeams("eng", setteamsArr, setteamsError, setteamsLoading);
+      setteams(teamsArr?.sports[0]?.leagues[0]?.teams);
     } else {
-      console.log(newsData?.articles);
+      setteams(teamsArr?.sports[0]?.leagues[0]?.teams);
     }
   }, [dataMatches, newsData]);
+  console.log(teams);
 
-  if (dataMatches) {
+  if (dataMatches && teams && newsData) {
     return (
       <LiveLayout>
         <main
@@ -44,13 +52,27 @@ const Home = () => {
           <div className="w-full rounded-md h-60 bg-pry-color"></div>
           <section className="my-8 py-4">
             <div className="flex justify-between w-full items-center">
-              <Heading heading="Leagues" />
-              <ViewAll action={() => alert("clicked")} />
+              <Heading heading="Teams" />
+              <ViewAll action={() => router.push("/live/teams")} />
+            </div>
+            <div>
+              {teams.slice(12, 20).map((team: any) => {
+                return (
+                  <TeamCard
+                    id={team?.team?.id}
+                    image={
+                      team?.team?.logos?.length > 0 && team.team.logos[0].href
+                    }
+                    name={team?.team?.name}
+                    slug={team?.team?.slug.split(".")[0]}
+                  />
+                );
+              })}
             </div>
           </section>
           <section className="my-8">
             <div className="flex justify-between items-center py-2">
-              <Heading heading="Recent Scores" />
+              <Heading heading="Recent Matches" />
               <ViewAll action={() => router.push("/live/matches")} />
             </div>
             <div className="flex flex-col gap-2">
@@ -76,7 +98,7 @@ const Home = () => {
                     headline:
                       matches.competitions[0]?.headlines?.length > 0 &&
                       matches.competitions[0]?.headlines[0].description,
-                    venue: matches.competitions[0]?.venue.fullName,
+                    venue: matches.competitions[0]?.venue?.fullName,
                     status:
                       matches.status.type.detail == "FT"
                         ? matches.status.type.detail
@@ -129,7 +151,7 @@ const Home = () => {
                       matches?.status.type.shortDetail == "FT"
                         ? "FT"
                         : `${d.getUTCHours() + 1}:${
-                            d.getUTCMinutes() == 0
+                            d.getUTCMinutes() === 0
                               ? d.getUTCMinutes() + "0"
                               : d.getUTCMinutes()
                           }`
@@ -146,7 +168,7 @@ const Home = () => {
               <ViewAll action={() => router.push("/live/news")} />
             </div>
             <div>
-              {newsData?.articles.map((article: any) => {
+              {newsData?.articles?.map((article: any) => {
                 var d = new Date(article.published);
 
                 const articleDate =
@@ -164,7 +186,8 @@ const Home = () => {
                 };
                 return (
                   <NewsCard
-                    headline={article.headline}
+                    key={article?.headline}
+                    headline={article?.headline}
                     date={articleDate}
                     action={newsRedirect}
                     image={article.images.length > 0 && article.images[0].url}
@@ -177,7 +200,7 @@ const Home = () => {
       </LiveLayout>
     );
   } else if (errorMatches) {
-    return <Error message={errorMatches.message} />;
+    return <Error message={errorMatches?.message} />;
   } else {
     return <Loading />;
   }

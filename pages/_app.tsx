@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
     if (localStorage.getItem("name")) {
       setname(localStorage.getItem("name"));
     } else {
-      router.push("/login");
+      router.push("/");
     }
   }, [name]);
 

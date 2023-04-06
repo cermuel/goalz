@@ -47,6 +47,10 @@ const Matches = () => {
   const [rusiaError, setrusiaError] = useState<any>();
   const [russiaLoading, setrussiaLoading] = useState<boolean>(false);
 
+  const [netherlandMatches, setnetherlandMatches] = useState<any>();
+  const [netherlandsError, setnetherlandsError] = useState<any>();
+  const [netherlandsLoading, setnetherlandsLoading] = useState<boolean>(false);
+
   const leagues = [
     {
       league: "eng",
@@ -82,6 +86,13 @@ const Matches = () => {
       league_data: setligueMatches,
       league_error: setligueError,
       league_loading: setligueLoading,
+    },
+    {
+      league: "ned",
+      league_value: netherlandMatches,
+      league_data: setnetherlandMatches,
+      league_error: setnetherlandsError,
+      league_loading: setnetherlandsLoading,
     },
     {
       league: "por",
@@ -123,7 +134,8 @@ const Matches = () => {
     serieMatches &&
     portugalMatches &&
     ligueMatches &&
-    russiaMatches
+    russiaMatches &&
+    netherlandMatches
   ) {
     return (
       <LiveLayout>
@@ -133,46 +145,46 @@ const Matches = () => {
           } flex flex-col gap-8 relative`}
         >
           <GoBack />
-          {leagues.map((league: any, key: number) => {
+          {leagues?.map((league: any, key: number) => {
             return (
               <section className="space-y-2" key={key}>
                 <div className="flex items-center gap-2">
                   {mode == "dark" ? (
                     <Image
-                      src={league.league_value?.leagues[0]?.logos[1]?.href}
+                      src={league?.league_value?.leagues[0]?.logos[1]?.href}
                       alt="League"
                       width={40}
                       height={40}
                     />
                   ) : (
                     <Image
-                      src={league.league_value?.leagues[0]?.logos[0]?.href}
+                      src={league?.league_value?.leagues[0]?.logos[0]?.href}
                       alt="League"
                       width={40}
                       height={40}
                     />
                   )}
-                  <Heading heading={league.league_value?.leagues[0]?.name} />
+                  <Heading heading={league?.league_value?.leagues[0]?.name} />
                 </div>
                 <div className="flex flex-col gap-2">
                   {league.league_value?.events
                     .slice(0, 10)
                     .map((matches: any) => {
-                      const match = matches.competitions[0].competitors;
+                      const match = matches?.competitions[0]?.competitors;
 
-                      let d = new Date(matches.competitions[0].startDate);
+                      let d = new Date(matches?.competitions[0]?.startDate);
 
                       const redirect: redirect = {
                         path: "/live/matches/match",
                         matchData: {
-                          homeTeamGoals: match[0].score,
-                          awayTeamGoals: match[1].score,
-                          homeTeamForm: match[0].form,
-                          awayTeamForm: match[1].form,
-                          homeTeamName: match[0].team.shortDisplayName,
-                          awayTeamName: match[1].team.shortDisplayName,
-                          homeTeamImageUrl: match[0].team.logo,
-                          awayTeamImageUrl: match[1].team.logo,
+                          homeTeamGoals: match[0]?.score,
+                          awayTeamGoals: match[1]?.score,
+                          homeTeamForm: match[0]?.form,
+                          awayTeamForm: match[1]?.form,
+                          homeTeamName: match[0]?.team?.shortDisplayName,
+                          awayTeamName: match[1]?.team?.shortDisplayName,
+                          homeTeamImageUrl: match[0]?.team?.logo,
+                          awayTeamImageUrl: match[1]?.team?.logo,
                           competition: "",
                           headline:
                             matches.competitions[0]?.headlines?.length > 0 &&
@@ -212,9 +224,9 @@ const Matches = () => {
                           athlete:
                             details?.athletesInvolved?.length > 0 &&
                             details?.athletesInvolved[0].displayName,
-                          time: details?.clock.displayValue,
-                          eventType: details?.type.text,
-                          homeTeam: details?.team.id == match[0].id,
+                          time: details?.clock?.displayValue,
+                          eventType: details?.type?.text,
+                          homeTeam: details?.team?.id == match[0].id,
                         });
                       });
                       return (
@@ -255,7 +267,8 @@ const Matches = () => {
     serieError ||
     ligueError ||
     portugalError ||
-    rusiaError
+    rusiaError ||
+    netherlandsError
   ) {
     return (
       <Error
