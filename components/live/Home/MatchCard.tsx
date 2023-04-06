@@ -24,9 +24,7 @@ const MatchCard = (Match: MatchCardType) => {
         } rounded-md flex flex-col justify-center pl-14 max-sm:pl-12 px-4 items-end relative cursor-pointer`}
       >
         <div
-          className={`absolute left-2 ${
-            mode == "light" ? "text-gray-800" : "text-gray-200"
-          } font-bold text-sm max-sm:text-[10px] `}
+          className={`absolute left-2 text-pry-color font-bold text-sm max-sm:text-[10px] `}
         >
           {Match.status}
         </div>

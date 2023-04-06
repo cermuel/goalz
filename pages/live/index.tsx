@@ -39,7 +39,6 @@ const Home = () => {
       setteams(teamsArr?.sports[0]?.leagues[0]?.teams);
     }
   }, [dataMatches, newsData]);
-  console.log(teams);
 
   if (dataMatches && teams && newsData) {
     return (
@@ -81,7 +80,7 @@ const Home = () => {
 
                 var d = new Date(matches.competitions[0].startDate);
 
-                // console.log(matches);
+                console.log(matches.status.type.detail.length);
 
                 const redirect: redirect = {
                   path: "/live/matches/match",
@@ -101,6 +100,8 @@ const Home = () => {
                     venue: matches.competitions[0]?.venue?.fullName,
                     status:
                       matches.status.type.detail == "FT"
+                        ? matches.status.type.detail
+                        : matches.status.type.detail.length == 3
                         ? matches.status.type.detail
                         : `${d.getUTCHours() + 1}:${
                             d.getUTCMinutes() == 0
@@ -148,10 +149,12 @@ const Home = () => {
                     awayWinner={match[1].winner}
                     homeWinner={match[0].winner}
                     status={
-                      matches?.status.type.shortDetail == "FT"
-                        ? "FT"
+                      matches.status.type.detail == "FT"
+                        ? matches.status.type.detail
+                        : matches.status.type.detail.length == 3
+                        ? matches.status.type.detail
                         : `${d.getUTCHours() + 1}:${
-                            d.getUTCMinutes() === 0
+                            d.getUTCMinutes() == 0
                               ? d.getUTCMinutes() + "0"
                               : d.getUTCMinutes()
                           }`
