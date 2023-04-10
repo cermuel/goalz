@@ -99,7 +99,8 @@ const Home = () => {
                       matches.competitions[0]?.headlines[0].description,
                     venue: matches.competitions[0]?.venue?.fullName,
                     status:
-                      matches.status.type.detail == "FT"
+                      matches.status.type.detail == "FT" ||
+                      matches.status.type.detail == "HT"
                         ? matches.status.type.detail
                         : matches.status.type.detail.length == 3
                         ? matches.status.type.detail
@@ -149,7 +150,8 @@ const Home = () => {
                     awayWinner={match[1].winner}
                     homeWinner={match[0].winner}
                     status={
-                      matches.status.type.detail == "FT"
+                      matches.status.type.detail == "FT" ||
+                      matches.status.type.detail == "HT"
                         ? matches.status.type.detail
                         : matches.status.type.detail.length == 3
                         ? matches.status.type.detail
