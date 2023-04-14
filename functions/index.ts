@@ -45,3 +45,19 @@ export const ValidatePasswordStrength = (password: string) => {
   }
   return { strength, feedback, strong };
 };
+
+export const InchToFeet = (inch: string | number) => {
+  let feet: number;
+  if (typeof inch == "string") {
+    feet = Number(inch) * 0.083;
+  } else {
+    feet = inch * 0.083;
+  }
+  return feet;
+};
+
+//1985-09-03T07:00Z conert to dob format
+export const getAthleteDOBFormat = (isoDate: string) => {
+  const dob: string = new Date(isoDate).toLocaleDateString();
+  return dob;
+};

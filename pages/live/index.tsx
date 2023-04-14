@@ -11,7 +11,7 @@ import Loading from "@/components/live/Loading";
 import Error from "@/components/live/Error";
 import { useRouter } from "next/router";
 import NewsCard from "@/components/live/News/NewsCard";
-import TeamCard from "@/components/Teams/TeamCard";
+import TeamCard from "@/components/live/Teams/TeamCard";
 
 const Home = () => {
   const { mode } = useContext(ThemeContext);

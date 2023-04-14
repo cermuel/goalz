@@ -2,11 +2,17 @@ import GoBack from "@/components/GoBack";
 import Heading from "@/components/live/Heading";
 import LiveLayout from "@/components/live/LiveLayout";
 import Loading from "@/components/live/Loading";
-import InfoCard from "@/components/Teams/InfoCard";
-import RecordCard from "@/components/Teams/RecordCard";
+import AthletesCard from "@/components/live/Teams/AthletesCard";
+import InfoCard from "@/components/live/Teams/InfoCard";
+import RecordCard from "@/components/live/Teams/RecordCard";
+import { getAthleteDOBFormat } from "@/functions";
 import { GetSingleTeam } from "@/functions/api";
 import { ThemeContext } from "@/pages/_app";
-import { RecordCardType } from "@/types";
+import {
+  AthleteCardType,
+  AthleteDataToPassType,
+  RecordCardType,
+} from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
@@ -20,7 +26,8 @@ const Team = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [newColor, setnewColor] = useState<string>("");
   const [sides, setsides] = useState("Info");
-  const sidesArr: string[] = ["Info", "Records"];
+  const [athletes, setathletes] = useState<any[]>([]);
+  const sidesArr: string[] = ["Info", "Players", "Records"];
 
   useLayoutEffect(() => {
     if (id && slug) {
@@ -34,11 +41,12 @@ const Team = () => {
         );
       } else {
         setnewColor(`#${team?.team.color}`);
+        setathletes(team.team.athletes);
       }
     }
   }, [id, slug, team]);
 
-  console.log(team?.team);
+  console.log(athletes);
   if (team && newColor) {
     return (
       <LiveLayout>
@@ -101,6 +109,33 @@ const Team = () => {
                   name="Next Match"
                   value={team.team?.nextEvent[0].shortName}
                 />
+              </div>
+            ) : sides == "Players" ? (
+              <div className="flex flex-wrap justify-between">
+                {athletes
+                  ?.slice(0)
+                  .reverse()
+                  .map((athlete: any) => {
+                    const dataToPass: AthleteDataToPassType = {
+                      height: athlete.displayHeight,
+                      weight: athlete.displayWeight,
+                      country: athlete.citizenship,
+                      countryImage: athlete.flag.href,
+                      active: athlete.active,
+                      gender: athlete.gender,
+                      DOB: getAthleteDOBFormat(athlete.dateOfBirth),
+                      position: athlete.position.name,
+                      link: athlete.links,
+                    };
+                    return (
+                      <AthletesCard
+                        name={athlete.displayName}
+                        jersey={athlete?.jersey}
+                        age={athlete.age}
+                        dataToPass={dataToPass}
+                      />
+                    );
+                  })}
               </div>
             ) : (
               <div className="w-full mt-4">

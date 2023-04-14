@@ -204,7 +204,7 @@ export const GetSingleTeam = (
   setloading(true);
   axios
     .get(
-      `https://site.api.espn.com/apis/site/v2/sports/soccer/${slug}.1/teams/${id}
+      `https://site.api.espn.com/apis/site/v2/sports/soccer/${slug}.1/teams/${id}?enable=roster
     `
     )
     .then((response) => {

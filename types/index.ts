@@ -108,3 +108,20 @@ export type InfoCardType = {
   name: string;
   value: string;
 };
+export type AthleteCardType = {
+  name: string;
+  jersey: string | number;
+  age: number | string;
+  dataToPass: AthleteDataToPassType;
+};
+export type AthleteDataToPassType = {
+  height: string;
+  weight: string;
+  country: string;
+  countryImage: string;
+  DOB: string;
+  gender: string;
+  link: string[];
+  active: boolean;
+  position: string;
+};
