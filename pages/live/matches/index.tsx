@@ -229,6 +229,7 @@ const Matches = () => {
                           homeTeam: details?.team?.id == match[0].id,
                         });
                       });
+                      console.log(matches);
                       return (
                         <MatchCard
                           key={matches.id}

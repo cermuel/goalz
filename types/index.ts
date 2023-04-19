@@ -124,4 +124,7 @@ export type AthleteDataToPassType = {
   link: string[];
   active: boolean;
   position: string;
+  name: string;
+  jersey: string | number;
+  age: number | string;
 };

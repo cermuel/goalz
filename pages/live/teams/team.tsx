@@ -46,7 +46,6 @@ const Team = () => {
     }
   }, [id, slug, team]);
 
-  console.log(athletes);
   if (team && newColor) {
     return (
       <LiveLayout>
@@ -126,6 +125,9 @@ const Team = () => {
                       DOB: getAthleteDOBFormat(athlete.dateOfBirth),
                       position: athlete.position.name,
                       link: athlete.links,
+                      name: athlete.displayName,
+                      jersey: athlete?.jersey,
+                      age: athlete.age,
                     };
                     return (
                       <AthletesCard
