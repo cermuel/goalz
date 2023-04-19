@@ -107,7 +107,7 @@ const Team = () => {
                 />
                 <InfoCard
                   name="Next Match"
-                  value={team.team?.nextEvent[0].shortName}
+                  value={team.team?.nextEvent[0]?.shortName}
                 />
               </div>
             ) : sides == "Players" ? (
