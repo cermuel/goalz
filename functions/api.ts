@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import { auth } from "@/firebaseconfig";
 import { toast } from "react-hot-toast";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 //REGISTER USER WITH EMAIL AND PASSWORD
 export const RegisterUser = (
@@ -133,19 +133,23 @@ export const GetLeagueMatches = (
     });
 };
 
-export const GetAllNews = (setdata: any, seterror: any, setloading: any) => {
+export const GetAllNews = async (
+  setdata: any,
+  seterror: any,
+  setloading: any
+) => {
   setloading(true);
-  axios
-    .get(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/news`)
-    .then((response) => {
-      setdata(response?.data);
-      setloading(false);
-    })
-    .catch((err) => {
-      setloading(false);
-      seterror(err);
-      console.log(err);
-    });
+
+  try {
+    const response: AxiosResponse = await axios.get(
+      `https://site.api.espn.com/apis/site/v2/sports/soccer/all/news`
+    );
+    setdata(response.data);
+    setloading(false);
+  } catch (err) {
+    setloading(false);
+    seterror(err);
+  }
 };
 
 export const GetLeagueNews = (
